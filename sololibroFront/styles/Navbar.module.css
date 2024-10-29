@@ -1,0 +1,26 @@
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #880606;
+  }
+  
+  .navbar-logo {
+    font-weight: bold;
+  }
+  
+  .navbar-search {
+    flex: 1;
+    margin: 0 10px;
+    padding: 5px;
+    border: 1px solid #af0909;
+    border-radius: 5px;
+  }
+  
+  .navbar-icons {
+    display: flex;
+    gap: 10px;
+  }
+  
