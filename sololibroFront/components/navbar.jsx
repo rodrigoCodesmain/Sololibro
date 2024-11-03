@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import styles from '../styles/Navbar.module.css'; 
+import SideBarMenu  from '../components/sideBarGenrer'
 
 export default function Navbar() {
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
@@ -27,6 +28,9 @@ export default function Navbar() {
           </div>
         )}
       </div>
+
+      {/* Agregar el componente de géneros */}
+      <SideBarMenu/>
     </nav>
   );
 }

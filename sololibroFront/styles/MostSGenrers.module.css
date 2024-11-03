@@ -1,0 +1,46 @@
+.sidebar-genres {
+    display: grid;
+    grid-template-columns: 1fr 1fr;  /* 2 columnas de igual tamaño */
+    gap: 20px;                       /* Espacio entre los rectángulos */
+    width: 10%;                      /* Ocupa el 50% de la pantalla */
+    margin: 0 auto;                  /* Centra el contenedor */
+    align-items: center;
+    justify-content: start;
+  }
+  
+  .genre {
+    display: flex;
+    flex-direction: column;          /* Coloca imagen y texto en columna */
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    height: 150px;                   /* Altura de cada rectángulo */
+    position: relative;
+  }
+  
+
+  .genre img {
+    width: 50px;                     /* Ancho de la imagen */
+    height: 50px;                    /* Alto de la imagen */
+    margin-bottom: 5px;             /* Espacio entre la imagen y el texto */
+  }
+
+
+  .romance {
+    background-color: #f28b82;
+  }
+  .motivacion {
+    background-color: #fbbc04;
+  }
+  
+  .misterio {
+    background-color: #d7aefb;
+  }
+  
+  .cienciaFiccion {
+    background-color: #aecbfa;
+  }

@@ -1,0 +1,28 @@
+.sidebar {
+    width: 200px; /* Ancho del sidebar */
+    padding: 20px; /* Espaciado interno */
+    background-color: #f0f0f0; /* Color de fondo */
+    border-radius: 8px; /* Bordes redondeados */
+}
+
+.sidebar h2 {
+    margin-bottom: 20px; /* Espacio debajo del título */
+}
+
+.sidebar ul {
+    list-style: none; /* Eliminar viñetas de la lista */
+    padding: 0; /* Eliminar padding */
+}
+
+.sidebar li {
+    display: flex; /* Usar flexbox para alinear imagen y texto */
+    align-items: center; /* Centrar verticalmente */
+    cursor: pointer; /* Cambiar el cursor al pasar por encima */
+    margin-bottom: 15px; /* Espacio entre elementos */
+}
+
+.sidebar img {
+    width: 30px; /* Ancho de las imágenes */
+    height: auto; /* Mantener la relación de aspecto */
+    margin-right: 10px; /* Espacio a la derecha de la imagen */
+}

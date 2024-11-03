@@ -1,3 +1,11 @@
+import MostSGenrer from '../components/mostSGenrer'
+
+
 export default function HomePage(){
-    return (<h1>Pagina Inicial</h1>)
-}
+    return (
+        <div>
+          <h1>Página Inicial</h1>
+          <MostSGenrer />  
+        </div>
+      );
+    }
