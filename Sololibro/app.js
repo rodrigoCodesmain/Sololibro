@@ -5,6 +5,8 @@ const mainrouter = require('./Rutas/rutas.js')
 //Declaracion del puerto
 const puerto = 3000;
 
+// Middleware para parssear JSON
+app.use(express.json()); 
 
 //Middleware para controlar las rutas solicitadas
 app.use(mainrouter);
