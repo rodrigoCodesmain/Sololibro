@@ -22,7 +22,7 @@ export default function Navbar() {
         </span>
         {isProfileMenuOpen && (
           <div className="profile-menu">
-            <Link href="/inicio">Iniciar Sesión</Link>
+            <Link href="/login">Iniciar Sesión</Link>
             <Link href="/registro">Registrarse</Link>
             <Link href="/profile">Perfil</Link>
           </div>
