@@ -1,5 +1,5 @@
 const connectDB = require ("../DataBase/MongoDB");
-const Usuario = require ("./Schemas/Schema.js")
+const {Usuario,Libro} = require ("./Schemas/Schema.js")
 const mongoose = require('mongoose');
 
 connectDB();
@@ -93,4 +93,39 @@ const insertUser = async (Body) => {
     }
 };
 
-module.exports = {getUsuarios,getlibros,getInventarios,getSucursal,getDisponibilidad,insertUser};
+const verificaciónUsuario = async (LBody) => { 
+    try { 
+        const ValidarNombre = await Usuario.findOne({ Nombre: LBody.username});
+        const ValidarEmail = await Usuario.findOne({ Email: LBody.password });
+        let Contraseña = null;
+        let UsuarioEncontrado = null;
+
+        if (ValidarNombre != null) {
+            UsuarioEncontrado = true;
+            Contraseña = ValidarNombre['Contraseña'];
+            console.log(Contraseña)
+        }
+        else if (ValidarEmail != null) {
+            UsuarioEncontrado = true;
+            Contraseña = ValidarEmail['Contraseña'];
+            console.log(Contraseña)
+        }
+
+        if(UsuarioEncontrado != true){
+            return { success: false, message: "El nombre de usuario o correo no está registrado" };
+        }
+
+        if(LBody.password == Contraseña){
+            return { success: true, message: "Usuario Verificado" };
+        }else {
+            return { success: false, message: "Contraseña Incorrecta" };
+        }
+        
+        
+    } catch (error) {
+        console.error("Error al ingresar usuario:", error);
+        return { success: false, message: "Hubo un error al insertar el usuario. Por favor, inténtalo de nuevo más tarde." };
+    }
+};
+
+module.exports = {getUsuarios,getlibros,getInventarios,getSucursal,getDisponibilidad,insertUser,verificaciónUsuario};
