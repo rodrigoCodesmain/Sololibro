@@ -10,7 +10,13 @@ export default function Navbar() {
 
   return (
     <nav className={styles.navbar}>
-      <div className={styles.navbarLogo}>SOLOLIBRO</div>
+      <div className={styles.logoContainer}>
+        <Link href="/">
+          <div className={styles.navbarLogo}>SOLOLIBRO</div>
+        </Link>
+        {/* Agregar el componente de géneros */}
+        <SideBarMenu/>
+        </div> 
       <input type="text" placeholder="Título o Autor" className={styles.navbarSearch} />
       <div className={styles.navbarIcons}>
         <span className="icon">🔔</span>
@@ -29,8 +35,7 @@ export default function Navbar() {
         )}
       </div>
 
-      {/* Agregar el componente de géneros */}
-      <SideBarMenu/>
+      
     </nav>
   );
 }

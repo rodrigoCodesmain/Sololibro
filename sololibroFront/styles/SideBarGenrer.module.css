@@ -1,28 +1,32 @@
 .sidebar {
-    width: 200px; /* Ancho del sidebar */
-    padding: 20px; /* Espaciado interno */
-    background-color: #f0f0f0; /* Color de fondo */
-    border-radius: 8px; /* Bordes redondeados */
-}
-
-.sidebar h2 {
-    margin-bottom: 20px; /* Espacio debajo del título */
-}
-
-.sidebar ul {
-    list-style: none; /* Eliminar viñetas de la lista */
-    padding: 0; /* Eliminar padding */
-}
-
-.sidebar li {
-    display: flex; /* Usar flexbox para alinear imagen y texto */
-    align-items: center; /* Centrar verticalmente */
-    cursor: pointer; /* Cambiar el cursor al pasar por encima */
-    margin-bottom: 15px; /* Espacio entre elementos */
-}
-
-.sidebar img {
-    width: 30px; /* Ancho de las imágenes */
-    height: auto; /* Mantener la relación de aspecto */
-    margin-right: 10px; /* Espacio a la derecha de la imagen */
-}
+    position: relative; /* Asegura que el menú de géneros se posicione de manera relativa */
+  }
+  
+  .genreButton {
+    background: none;
+    border: none;
+    font-size: 24px; /* Tamaño del icono de tres barras */
+    cursor: pointer;
+  }
+  
+  .genreList {
+    position: absolute; /* Posiciona el menú de géneros fuera del flujo normal */
+    top: 40px; /* Desplaza el menú debajo del botón */
+    left: 0;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    list-style: none;
+    margin: 0;
+    width: 150px; /* Ancho del menú */
+  }
+  
+  .genreList li {
+    margin-bottom: 8px;
+    cursor: pointer;
+  }
+  
+  .genreList li:last-child {
+    margin-bottom: 0;
+  }

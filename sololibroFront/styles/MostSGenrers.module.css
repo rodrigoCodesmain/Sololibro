@@ -2,10 +2,12 @@
     display: grid;
     grid-template-columns: 1fr 1fr;  /* 2 columnas de igual tamaño */
     gap: 20px;                       /* Espacio entre los rectángulos */
-    width: 10%;                      /* Ocupa el 50% de la pantalla */
-    margin: 0 auto;                  /* Centra el contenedor */
-    align-items: center;
-    justify-content: start;
+    width: 20%;                      /* Ocupa el 50% de la pantalla */
+    position: absolute;
+    top: 50%;                        /* Centrado vertical (puedes ajustar este valor) */
+    left: 10%;                       /* Mueve el contenedor a la izquierda sin llegar al tope */
+    transform: translateY(-50%);     /* Centrado vertical perfecto (ajusta para la mitad exacta) */
+    padding: 20px 0;  
   }
   
   .genre {

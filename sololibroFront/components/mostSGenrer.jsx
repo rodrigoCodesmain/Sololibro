@@ -3,6 +3,7 @@ import styles from '../styles/MostSGenrers.module.css';
 export default function MostSGenrer() {
     return (
         <div className={styles['sidebar-genres']}>
+            {/* Titulo "Generos mas vendidos" */}
             <div className={`${styles.genre} ${styles.romance}`}>
                 <img src='/Genrers-jpg/romance.jpg' alt="Romance" />
                 <p>Romance</p>

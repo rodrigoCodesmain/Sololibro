@@ -1,3 +1,5 @@
-export default function SignInPage(){
-    return <h1>Registro de Usuario</h1>
+import RegisterPage from '../../components/RegisterPage';
+
+export default function Registro() {
+    return <RegisterPage />;
 }

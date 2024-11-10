@@ -13,12 +13,13 @@ const genres = [
 ];
 
 export default function Sidebar() {
-    const [isGenresMenuOpen, setIsGenresMenuOpen] = useState(false); // Estado para el menú de géneros
+    const [isGenresMenuOpen, setIsGenresMenuOpen] = useState(false);
 
     return (
         <div className={styles.sidebar}>
-            <button onClick={() => setIsGenresMenuOpen(!isGenresMenuOpen)}>
-                Géneros
+            <button className={styles.genreButton} onClick={() => setIsGenresMenuOpen(!isGenresMenuOpen)}>
+            ☰ {
+            }
             </button>
             {isGenresMenuOpen && (
                 <ul className={styles.genreList}>

@@ -4,7 +4,13 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px;
-    background-color: #880606;
+    background-color: #fdaeae;
+  }
+
+  .logoContainer {
+    display: flex;
+    align-items: center;
+    gap: 10px; 
   }
   
   .navbar-logo {
