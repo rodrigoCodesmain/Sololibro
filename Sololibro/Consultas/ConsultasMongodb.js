@@ -1,6 +1,5 @@
 const connectDB = require ("../DataBase/MongoDB");
 const {Usuario,Libro} = require ("./Schemas/Schema.js")
-const mongoose = require('mongoose');
 
 connectDB();
 
@@ -97,6 +96,7 @@ const verificaciónUsuario = async (LBody) => {
     try { 
         const ValidarNombre = await Usuario.findOne({ Nombre: LBody.username});
         const ValidarEmail = await Usuario.findOne({ Email: LBody.password });
+
         let Contraseña = null;
         let UsuarioEncontrado = null;
 
@@ -128,4 +128,16 @@ const verificaciónUsuario = async (LBody) => {
     }
 };
 
-module.exports = {getUsuarios,getlibros,getInventarios,getSucursal,getDisponibilidad,insertUser,verificaciónUsuario};
+const InformacionLibros = async (Body) => { 
+    try { 
+        const nombres = await Libro.find({ Titulo: { $exists: true } , Autor: { $exists: true }, Categoria:{ $exists: true },ISBN:{ $exists: true},Precio:{ $exists: true},ImagenURL:{ $exists: true} }, { Titulo: 1, Autor: 1,Categoria: 1,ISBN: 1, Precio: 1, ImagenURL:1, _id: 0 } );
+        return  nombres;
+        
+    } catch (error) {
+        console.error("Error al extraer la información de los libros", error);
+        return { success: false, message: "Hubo un error al extraer la información de los libros. Por favor, inténtalo de nuevo más tarde." };
+    }
+};
+
+
+module.exports = {getUsuarios,getlibros,getInventarios,getSucursal,getDisponibilidad,insertUser,verificaciónUsuario,InformacionLibros};

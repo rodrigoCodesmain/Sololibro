@@ -4,7 +4,7 @@ const path = require('path');
 const app = express();
 const router = express.Router();
 
-const { getUsuarios,getlibros,getInventarios,getSucursal,getDisponibilidad,insertUser,verificaciónUsuario} = require('../Consultas/ConsultasMongodb'); 
+const { getUsuarios,getlibros,getInventarios,getSucursal,getDisponibilidad,insertUser,verificaciónUsuario,InformacionLibros} = require('../Consultas/ConsultasMongodb'); 
 
 app.use(express.static('public'));
 app.use(router);
@@ -67,18 +67,10 @@ router.post("/login", async (req, res) => {
         res.status(500).send("Error al enviar datos");
     }
 });
-router.get('/api/libros', (req, res) => {
-    const libros = [
-        { title: 'El Principito', author: 'Antoine de Saint-Exupéry' },
-        { title: 'Cien Años de Soledad', author: 'Gabriel García Márquez' },
-        { title: 'Don Quijote de la Mancha', author: 'Miguel de Cervantes' },
-        { title: 'El Principito', author: 'Antoine de Saint-Exupéry' },
-        { title: 'Cien Años de Soledad', author: 'Gabriel García Márquez' },
-        { title: 'Don Quijote de la Mancha', author: 'Miguel de Cervantes' },
-        { title: 'El Principito', author: 'Antoine de Saint-Exupéry' },
-        { title: 'Cien Años de Soledad', author: 'Gabriel García Márquez' },
-        { title: 'Don Quijote de la Mancha', author: 'Miguel de Cervantes' },
-    ];
+router.get('/api/libros', async (req, res) => {
+    const libros = await InformacionLibros();
+
+    console.log(libros)
     res.json(libros); // Enviar libros en formato JSON
 });
 
