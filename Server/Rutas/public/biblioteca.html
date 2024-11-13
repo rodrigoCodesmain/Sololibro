@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative; /* Añadir esto para posicionar el icono en la esquina superior derecha */
+        }
+        .search-bar {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .search-bar input {
+            width: 60%;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .book-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .book {
+            display: flex;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+        .book:hover {
+            transform: scale(1.05);
+        }
+        .book-image {
+            flex: 0 0 200px;
+            overflow: hidden;
+            border-right: 1px solid #ddd;
+        }
+        .book-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px 0 0 8px;
+        }
+        .book-info {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border-left: 1px solid #ddd;
+        }
+        .book-info h3 {
+            font-size: 18px;
+            color: #333;
+            margin: 0 0 5px;
+            font-weight: bold;
+        }
+        .book-info p {
+            font-size: 14px;
+            color: #555;
+            margin: 0 0 5px;
+        }
+        .book-info .price {
+            font-size: 20px;
+            color: #d32f2f;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .book-info button {
+            margin-top: 10px;
+            padding: 8px 12px;
+            font-size: 14px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .book-info button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Estilos para el icono de usuario y el menú */
+        .user-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #333;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            position: absolute;
+            top: 20px;
+            right: 20px; /* Esto posiciona el icono en la esquina superior derecha */
+        }
+
+        .user-icon:hover {
+            background-color: #555;
+        }
+
+        .user-options {
+            display: none;
+            position: absolute;
+            top: 50px;
+            right: 0;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 200px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-options ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .user-options li {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .user-options li:hover {
+            background-color: #f0f0f0;
+        }
+
+        /* Estilos para el mensaje de confirmación */
+        .confirm-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .confirm-modal .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .confirm-modal button {
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="search-bar">
+        <input type="text" id="search" placeholder="Titulo,Autor,ISBN">
+    </div>
+    <div class="book-container" id="bookContainer">
+        <!-- Los libros se cargarán aquí -->
+    </div>
+
+    <!-- Icono de usuario -->
+    <div class="user-icon" id="userIcon">
+        <span>👤</span>
+    </div>
+
+    <!-- Menú de opciones -->
+    <div class="user-options" id="userOptions">
+        <ul>
+            <li id="wishList">Lista de Deseados</li>
+            <li id="addBook">Añadir Libro</li> <!-- Esta opción estará condicionada -->
+            <li id="settings">Configuración</li>
+            <li id="logout">Cerrar Sesión</li>
+        </ul>
+    </div>
+
+    <!-- Modal de confirmación para cerrar sesión -->
+    <div class="confirm-modal" id="confirmModal">
+        <div class="modal-content">
+            <p>¿Estás seguro de que deseas cerrar sesión?</p>
+            <button id="confirmYes">Sí</button>
+            <button id="confirmNo">No</button>
+        </div>
+    </div>
+
+    <script>
+        async function fetchBooks() {
+            try {
+                const response = await fetch('/api/libros');
+                const books = await response.json();
+    
+                const container = document.getElementById('bookContainer');
+                container.innerHTML = '';
+    
+                books.forEach(book => {
+                    const bookDiv = document.createElement('div');
+                    bookDiv.classList.add('book');
+                    bookDiv.innerHTML = `
+                        <div class="book-image">
+                            <img src="${book.ImagenURL}" alt="${book.Titulo}">
+                        </div>
+                        <div class="book-info">
+                            <h3>${book.Titulo}</h3>
+                            <p>${book.Autor}</p>
+                            <p><strong>Categoría:</strong> ${book.Categoria}</p>
+                            <p><strong>ISBN:</strong> ${book.ISBN}</p>
+                            <div class="price">$${book.Precio}</div>
+                            <button>Agregar</button>
+                        </div>
+                    `;
+                    container.appendChild(bookDiv);
+                });
+            } catch (error) {
+                console.error('Error al obtener los libros:', error);
+            }
+        }
+    
+        document.getElementById("search").addEventListener("input", function() {
+            const searchTerm = this.value.toLowerCase();
+            const books = document.querySelectorAll(".book");
+            books.forEach(book => {
+                const Titulo = book.querySelector("h3").textContent.toLowerCase();
+                const Autor = book.querySelector("p").textContent.toLowerCase();
+                const ISBN = book.querySelector(".book-info p:nth-child(4)").textContent.toLowerCase();
+    
+                // Se busca por título, autor o ISBN
+                if (Titulo.includes(searchTerm) || Autor.includes(searchTerm) || ISBN.includes(searchTerm)) {
+                    book.style.display = "flex";
+                } else {
+                    book.style.display = "none";
+                }
+            });
+        });
+
+        // Simulación de la información de usuario (puedes adaptar esto según tu sistema)
+        const isCompanyAccount = true; // Esta variable indica si la cuenta es de empresa
+
+        // Referencias a los elementos del DOM
+        const userIcon = document.getElementById("userIcon");
+        const userOptions = document.getElementById("userOptions");
+        const addBookOption = document.getElementById("addBook");
+        const logoutOption = document.getElementById("logout");
+        const confirmModal = document.getElementById("confirmModal");
+        const confirmYes = document.getElementById("confirmYes");
+        const confirmNo = document.getElementById("confirmNo");
+
+        // Mostrar/ocultar opciones del usuario
+        userIcon.addEventListener("click", function() {
+            userOptions.style.display = userOptions.style.display === "block" ? "none" : "block";
+        });
+
+        // Condicionar la visibilidad de "Añadir libro"
+        if (!isCompanyAccount) {
+            addBookOption.style.display = "none"; // Ocultar si no es cuenta de empresa
+        }
+
+        // Confirmar cierre de sesión
+        logoutOption.addEventListener("click", function() {
+            confirmModal.style.display = "flex";
+        });
+
+        // Confirmar "Sí" para cerrar sesión
+        confirmYes.addEventListener("click", function() {
+            alert("Sesión cerrada");
+            confirmModal.style.display = "none";
+            window.location.href= "https://localhost:3000/login"
+        });
+
+        // Cancelar cierre de sesión
+        confirmNo.addEventListener("click", function() {
+            confirmModal.style.display = "none";
+        });
+
+        fetchBooks();
+    </script>
+</body>
+</html>
