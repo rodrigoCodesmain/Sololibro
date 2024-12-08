@@ -1,27 +1,26 @@
+"use client";
+
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation'; // Usamos este hook para navegar
 import styles from '../styles/Navbar.module.css';
-import SideBarMenu from './SideBarGenrer';
+import SideBarMenu from './sideBarGenrer';
 
 export default function Navbar() {
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const router = useRouter();
 
-  // Función que maneja el clic en el ícono de perfil
+  // Funci贸n que maneja el clic en el 铆cono de perfil
   const handleProfileIconClick = () => {
     setIsProfileMenuOpen(!isProfileMenuOpen);
   };
 
-  // Función que maneja la búsqueda y la actualización de la URL
+  // Funci贸n que maneja la b煤squeda y la actualizaci贸n de la URL
   const handleSearch = () => {
     if (searchTerm) {
-      localStorage.setItem('searchTerm', searchTerm); // Guardamos el término en localStorage
-      router.push({
-        pathname: '/', // Mantener la ruta base
-        query: { searchTerm }, // Actualizamos el parámetro 'searchTerm' sin cambiar la ruta
-      });
+      localStorage.setItem('searchTerm', searchTerm); // Guardamos el t茅rmino en localStorage
+      router.push(`/?searchTerm=${searchTerm}`); // Actualizamos la URL con el t茅rmino de b煤squeda
     }
   };
 
@@ -39,7 +38,7 @@ export default function Navbar() {
         className={styles.navbarSearch}
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        onKeyDown={(e) => e.key === 'Enter' && handleSearch()} // Ejecuta la búsqueda al presionar Enter
+        onKeyDown={(e) => e.key === 'Enter' && handleSearch()} // Ejecuta la b煤squeda al presionar Enter
       />
       <div className={styles.navbarIcons}>
         <div className={styles.profileIconContainer}>
