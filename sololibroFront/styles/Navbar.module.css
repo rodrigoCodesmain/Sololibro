@@ -13,8 +13,17 @@
     gap: 10px; 
   }
   
-  .navbar-logo {
-    font-weight: bold;
+  .navbarLogo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-weight: bold; 
+  } 
+
+  .navbarLogo img {
+    width: 80px; /* Ajusta el tamaño del logo */
+    height: auto; /* Mantén la proporción del logo */
   }
   
   .navbarSearch {

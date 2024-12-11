@@ -2,7 +2,8 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation'; // Usamos este hook para navegar
+import { useRouter } from 'next/navigation';
+import Image from 'next/image'; // Importamos Image
 import styles from '../styles/Navbar.module.css';
 import SideBarMenu from './sideBarGenrer';
 
@@ -11,16 +12,14 @@ export default function Navbar() {
   const [searchTerm, setSearchTerm] = useState('');
   const router = useRouter();
 
-  // Funci贸n que maneja el clic en el 铆cono de perfil
   const handleProfileIconClick = () => {
     setIsProfileMenuOpen(!isProfileMenuOpen);
   };
 
-  // Funci贸n que maneja la b煤squeda y la actualizaci贸n de la URL
   const handleSearch = () => {
     if (searchTerm) {
-      localStorage.setItem('searchTerm', searchTerm); // Guardamos el t茅rmino en localStorage
-      router.push(`/?searchTerm=${searchTerm}`); // Actualizamos la URL con el t茅rmino de b煤squeda
+      localStorage.setItem('searchTerm', searchTerm);
+      router.push(`/?searchTerm=${searchTerm}`);
     }
   };
 
@@ -28,7 +27,15 @@ export default function Navbar() {
     <nav className={styles.navbar}>
       <div className={styles.logoContainer}>
         <Link href="/">
-          <div className={styles.navbarLogo}>SOLOLIBRO</div>
+          <div className={styles.navbarLogo}>
+            {/* Aquí reemplazamos el texto con el logo */}
+            <Image 
+              src="/images/logo.png" // Ruta del logo
+              alt="SOLOLIBRO Logo" 
+              width={100} // Ajusta el tamaño según tu necesidad
+              height={50} 
+            />
+          </div>
         </Link>
         <SideBarMenu />
       </div>
@@ -38,7 +45,7 @@ export default function Navbar() {
         className={styles.navbarSearch}
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        onKeyDown={(e) => e.key === 'Enter' && handleSearch()} // Ejecuta la b煤squeda al presionar Enter
+        onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
       />
       <div className={styles.navbarIcons}>
         <div className={styles.profileIconContainer}>
