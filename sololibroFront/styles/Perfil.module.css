@@ -1,70 +1,206 @@
+/* Ajuste general de la página */
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    max-width: 600px;
-    margin: 0 auto;
-  }
-  
-  .section {
-    width: 100%;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .personalInfo {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-  }
-  
-  .imagePlaceholder {
-    width: 100px;
-    height: 100px;
-    background-color: #e0e0e0;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-  }
-  
-  .imageInput {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  background-color: #f7e6c4;
+  padding: 20px;
+}
+
+/* Tarjetas */
+.card {
+  width: 100%;
+  max-width: 600px;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* Información Personal */
+.personalInfo {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.imagePlaceholder {
+  width: 80px;
+  height: 80px;
+  background-color: #f1f1f1;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.imageInput {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.userInfo {
+  flex: 1;
+}
+
+.userName {
+  font-size: 1.2rem;
+  color: #444;
+}
+
+.userEmail {
+  font-size: 1rem;
+  color: #666;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.editButton,
+.deleteButton {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.editButton {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.deleteButton {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+/* Preferencias */
+.preferences {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.notifications {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Libros Buscados */
+.cardContent {
+  padding: 10px;
+}
+
+.bookList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.bookList li {
+  margin-bottom: 5px;
+}
+
+/* Modales */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background: #f9f9f9;
+  border-radius: 16px;
+  padding: 20px;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
     opacity: 0;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    cursor: pointer;
+    transform: scale(0.95);
   }
-  
-  .userInfo {
-    display: flex;
-    flex-direction: column;
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
-  
-  .userInfo h3 {
-    margin: 0;
-  }
-  
-  .preferences {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .notifications {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .card {
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
+}
+
+.modalTitle {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.modalLabel {
+  display: block;
+  margin: 10px 0;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.modalInput {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-top: 5px;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.saveButton {
+  background-color: #4caf50;
+  color: white;
+}
+
+.cancelButton {
+  background-color: #f1f1f1;
+  color: #333;
+}
+
+.saveButton:hover {
+  background-color: #45a049;
+}
+
+.cancelButton:hover {
+  background-color: #ddd;
+}
