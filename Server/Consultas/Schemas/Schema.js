@@ -59,7 +59,7 @@ const disponibilidadSchema = new mongoose.Schema({
 
 // Schema del la coleccion libro
 const LibroSchema = new mongoose.Schema({
-    _id: { type: String},
+    _id: { type: mongoose.Schema.Types.ObjectId, auto: true },
     categorias: { type: String},
     ISBN: { type: String},
     titulo : { type: String},
@@ -67,12 +67,16 @@ const LibroSchema = new mongoose.Schema({
     precio: {type: Number},
     disponibilidad: { type: [disponibilidadSchema], required: false},
     ImagenURL:{type: String},
+    sucursal: { type: String },   // Nuevo parámetro Sucursal
+    cantidad: { type: Number }     // Nuevo parámetro Cantidad
 },
 { 
     //Moficadores del schema
+    versionKey: false,           
     strict: false,
-    collection: 'Libros' 
-
+    collection: 'Libros' ,
+    toJSON: { versionKey: false }, // Omitir __v automáticamente
+    toObject: { versionKey: false } // Omitir __v automáticamente
 });
 
 

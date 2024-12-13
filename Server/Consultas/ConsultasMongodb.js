@@ -1,68 +1,8 @@
 const connectDB = require ("../DataBase/MongoDB");
-const {Usuario,Libro} = require ("./Schemas/Schema.js")
+const {Libro} = require ("./Schemas/Schema.js")
 
 connectDB();
 
-
-const CrearUsuarios = async (Body) => { 
-    try { 
-        const ValidarNombre = await Usuario.findOne({ nombre: Body.Nombre });
-        const ValidarEmail = await Usuario.findOne({ email: Body.Email });
-
-        if (ValidarNombre != null) {
-            // console.log("Este nombre de usuario ya existe");
-            return { success: false, message: "El nombre de usuario ya está ocupado" };
-        }
-        if (ValidarEmail != null) {
-            // console.log("Este correo ya está en uso");
-            return { success: false, message: "Este correo ya está en uso" };
-        }
-        
-        const respuesta = await Usuario.create(Body); // Esperar la creación del usuario
-        // console.log("Usuario agregado correctamente");
-        return { success: true, respuesta };
-        
-    } catch (error) {
-        console.error("Error al insertar usuario:", error);
-        return { success: false, message: "Hubo un error al insertar el usuario. Por favor, inténtalo de nuevo más tarde." };
-    }
-};
-
-const verificaciónUsuario = async (LBody) => { 
-    try { 
-        const ValidarNombre = await Usuario.findOne({ nombre: LBody.username});
-        const ValidarEmail = await Usuario.findOne({ email: LBody.username });
-
-        let Contraseña = null;
-        let UsuarioEncontrado = null;
-
-        if (ValidarNombre != null) {
-            UsuarioEncontrado = true;
-            Contraseña = ValidarNombre['contraseña'];
-            console.log(Contraseña)
-        }
-        else if (ValidarEmail != null) {
-            UsuarioEncontrado = true;
-            Contraseña = ValidarEmail['contraseña'];
-            console.log(Contraseña)
-        }
-
-        if(UsuarioEncontrado != true){
-            return { success: false, message: "El nombre de usuario o correo no está registrado" };
-        }
-
-        if(LBody.password == Contraseña){
-            return { success: true, message: "Usuario Verificado" };
-        }else {
-            return { success: false, message: "Contraseña Incorrecta" };
-        }
-        
-        
-    } catch (error) {
-        console.error("Error al ingresar usuario:", error);
-        return { success: false, message: "Hubo un error al insertar el usuario. Por favor, inténtalo de nuevo más tarde." };
-    }
-};
 
 const InformacionLibros = async () => { 
     try { 
@@ -73,7 +13,8 @@ const InformacionLibros = async () => {
                 categorias: { $exists: true },
                 isbn: { $exists: true },
                 precio: { $exists: true },
-                ImagenURL: { $exists: true }
+                ImagenURL: { $exists: true },
+                sucursal: { $exists: true },
             }, 
             { 
                 titulo: 1, 
@@ -81,7 +22,8 @@ const InformacionLibros = async () => {
                 categorias: 1, 
                 isbn: 1, 
                 precio: 1, 
-                ImagenURL: 1, 
+                ImagenURL: 1,
+                sucursal: 1, 
                 _id: 1 
             }
         );
@@ -93,4 +35,102 @@ const InformacionLibros = async () => {
     }
 };
 
-module.exports = {CrearUsuarios,verificaciónUsuario,InformacionLibros};
+const CrudLibros = async () => { 
+    try { 
+        const libros = await Libro.find(
+            { 
+                titulo: { $exists: true }, 
+                autor: { $exists: true }, 
+                categorias: { $exists: true },
+                isbn: { $exists: true },
+                precio: { $exists: true },
+                ImagenURL: { $exists: true },
+                sucursal: { $exists: true }, 
+                cantidad: { $exists: true }   
+            }, 
+            { 
+                titulo: 1, 
+                autor: 1, 
+                categorias: 1, 
+                isbn: 1, 
+                precio: 1, 
+                ImagenURL: 1,
+                sucursal: 1, 
+                cantidad: 1,  
+                _id: 1 
+            }
+        );
+        return libros;
+        
+    } catch (error) {
+        console.error("Error al extraer la información de los libros", error);
+        return { success: false, message: "Hubo un error al extraer la información de los libros. Por favor, inténtalo de nuevo más tarde." };
+    }
+};
+
+const findById = async (id) => {
+
+    console.log(" Pase por busqueda solamente")
+
+    try {
+        const libro = await Libro.findById(id, { _id: 1 }); // Solo obtenemos el ID
+
+        if (!libro) {
+            return { success: false, message: "Libro no encontrado." };
+        }
+
+        return { success: true, libro }; // Retorna el libro encontrado
+    } catch (error) {
+        console.error("Error al obtener el libro:", error);
+        return { success: false, message: "Hubo un error al obtener el libro. Por favor, inténtalo de nuevo más tarde." };
+    }
+};
+
+
+const EliminarLibroPorId = async (id) => {
+    try {
+        const libro = await Libro.deleteOne({ _id: id }); // Solo obtenemos el ID
+        return { success: true, libro }; // Retorna el libro eliminado
+    } catch (error) {
+        console.error("Error al obtener el libro:", error);
+        return { success: false, message: "Hubo un error al obtener el libro. Por favor, inténtalo de nuevo más tarde." };
+    }
+};
+
+
+const ActualizarLibroPorId = async (id, body) => {
+    
+    console.log(id)
+    try {
+        const libroActualizado = await Libro.findByIdAndUpdate(id, 
+
+            { $set: body }, // Actualizar únicamente los campos proporcionados
+            { new: true, runValidators: true } // Retornar el documento actualizado y aplicar validadores del esquema
+        
+        
+        );
+
+        if (!libroActualizado) {
+            return { success: false, message: "Libro no encontrado." };
+        }
+
+        return { success: true, libro: libroActualizado }; // Retorna el libro actualizado
+    } catch (error) {
+        console.error("Error al actualizar el libro:", error);
+        return { success: false, message: "Hubo un error al actualizar el libro. Por favor, inténtalo de nuevo más tarde." };
+    }
+};
+
+const CrearLibro = async (body) => { 
+    try {
+
+        const libroNuevo = await Libro.create(body); // Crear el libro directamente desde body
+        
+        return { success: true, libro: libroNuevo };
+        
+    } catch (error) {
+        console.error("Error al insertar libro:", error);
+        return { success: false, message: "Hubo un error al insertar el libro. Por favor, inténtalo de nuevo más tarde." };
+    }
+};
+module.exports = {InformacionLibros,findById,ActualizarLibroPorId,CrudLibros,EliminarLibroPorId,CrearLibro};
