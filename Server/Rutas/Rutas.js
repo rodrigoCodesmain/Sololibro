@@ -4,7 +4,8 @@ const path = require('path');
 const app = express();
 const router = express.Router();
 
-const { CrearUsuarios,verificaciónUsuario,InformacionLibros} = require('../Consultas/ConsultasMongodb'); 
+const {InformacionLibros,findById,ActualizarLibroPorId,CrudLibros,EliminarLibroPorId,CrearLibro} = require('../Consultas/ConsultasMongodb'); 
+const { CrearUsuarios,verificaciónUsuario} = require('../Consultas/ConsultasMySQL'); 
 
 app.use(express.static('public'));
 app.use(router);
@@ -48,6 +49,7 @@ router.post("/api/login", async (req, res) => {
         res.status(500).send("Error al enviar datos");
     }
 });
+
 router.get('/api/libros', async (req, res) => {
     try {
         
@@ -62,67 +64,88 @@ router.get('/api/libros', async (req, res) => {
 });
 
 
-router.get("/main", async (req,res)=>{
-    try{
-        res.sendFile(path.join(__dirname, 'public','biblioteca.html'));
-    }catch (error) {
-        console.error(error);
-        res.status(404).send("La pagina no existe");
-    }
-
-})
-//////
-
-
-router.get("/usuario", async (req, res) => {
+router.get('/api/CrudLibros', async (req, res) => {
     try {
-        const usuarios = await getUsuarios(); // Llamada a la función que obtiene usuarios
-        res.json(usuarios); // Envía la lista de usuarios como respuesta
+        
+        libros = await CrudLibros();
+      
+        return res.json(libros); // Enviar los libros encontrados en formato JSON
+        
     } catch (error) {
-        console.error(error);
-        res.status(500).send("Error al obtener usuarios");
+      console.error('Error al obtener los libros:', error);
+      return res.status(500).json({ message: 'Hubo un error al obtener los libros' });
     }
 });
 
-router.get("/libros", async (req, res) => {
+router.post("/api/CrearLibro", async (req, res) => {
     try {
-        const libros = await getlibros(); // Llamada a la función que obtiene usuarios
-        res.json(libros); // Envía la lista de usuarios como respuesta
+        const body = req.body;
+        const result = await CrearLibro(body);
+
+        // Envía la respuesta al cliente
+        if (result.success) {
+            res.status(201).send(result); // 201 Creado el nuevo libro
+        } else {
+            // console.log(result);
+            res.status(400).send(result); // 400 Bad Request para errores de validación
+        }
     } catch (error) {
         console.error(error);
-        res.status(500).send("Error al obtener usuarios");
+        res.status(500).send("Error al enviar datos");
     }
 });
 
-router.get("/sucursales", async (req, res) => {
+
+router.put("/api/libros/:id", async (req, res) => {
+    const { id } = req.params; // Obtener el ID del libro desde la URL
+    const { titulo, autor, categorias, isbn, precio, sucursal, cantidad } = req.body; // Desestructurar el cuerpo de la solicitud
+    const body = req.body
     try {
-        const Sucursal = await getSucursal(); // Llamada a la función que obtiene usuarios
-        res.json(Sucursal); // Envía la lista de usuarios como respuesta
+        // Validar que se haya proporcionado el ID y otros campos necesarios
+        if (!id || !titulo || !autor || !categorias || !isbn || !precio || !sucursal || !cantidad) {
+            return res.status(400).send("Todos los campos son requeridos.");
+        }
+
+        // Verificar si el libro existe
+        const libroExistente = await findById(id);
+        if (!libroExistente) {
+            return res.status(404).send("Libro no encontrado.");
+        }
+
+        // Actualizar el libro en la base de datos
+        const libroActualizado = await ActualizarLibroPorId(id,body);
+
+        // Enviar respuesta con el libro actualizado
+        res.status(200).json(libroActualizado);
     } catch (error) {
         console.error(error);
-        res.status(500).send("Error al obtener usuarios");
+        res.status(500).send("Error al enviar datos");
     }
 });
 
-router.get("/inventarios", async (req, res) => {
+router.delete("/api/BorrarLibro/:id", async (req, res) => {
+    const { id } = req.params; // Obtener el ID del libro desde la URL
     try {
-        const inventarios = await getInventarios(); // Llamada a la función que obtiene usuarios
-        res.json(inventarios); // Envía la lista de usuarios como respuesta
+       
+        // Verificar si el libro existe
+        const libroExistente = await findById(id);
+        if (!libroExistente) {
+            return res.status(404).send("Libro no encontrado.");
+        }
+        
+        // Actualizar el libro en la base de datos
+        const libroEliminado = await EliminarLibroPorId(id);
+
+        console.log("Funciona")
+        // Enviar respuesta con el libro actualizado
+        res.status(200).json(libroEliminado);
     } catch (error) {
         console.error(error);
-        res.status(500).send("Error al obtener usuarios");
+        res.status(500).send("Error al enviar datos");
     }
 });
 
-router.get("/disponibilidad", async (req, res) => {
-    try {
-        const disponibilidad = await getDisponibilidad(); // Llamada a la función que obtiene usuarios
-        res.json(disponibilidad); // Envía la lista de usuarios como respuesta
-    } catch (error) {
-        console.error(error);
-        res.status(500).send("Error al obtener usuarios");
-    }
-});
+
 
 
 module.exports = router;
