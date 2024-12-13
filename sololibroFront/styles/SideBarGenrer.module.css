@@ -1,5 +1,6 @@
 .sidebar {
     position: relative; /* Asegura que el menú de géneros se posicione de manera relativa */
+    top: 40px; /* Desplaza el menú debajo del botón */
   }
   
   .genreButton {
@@ -12,7 +13,7 @@
   .genreList {
     position: absolute; /* Posiciona el menú de géneros fuera del flujo normal */
     top: 40px; /* Desplaza el menú debajo del botón */
-    left: 0;
+    left: 10px;
     background-color: #f0f0f0;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);

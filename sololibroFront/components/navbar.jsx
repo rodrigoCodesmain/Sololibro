@@ -3,9 +3,8 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image'; // Importamos Image
+import Image from 'next/image';
 import styles from '../styles/Navbar.module.css';
-import SideBarMenu from './sideBarGenrer';
 
 export default function Navbar() {
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
@@ -23,22 +22,23 @@ export default function Navbar() {
     }
   };
 
+  
+
   return (
     <nav className={styles.navbar}>
       <div className={styles.logoContainer}>
-        <Link href="/">
+       <Link href="/" onClick={() => { setSearchTerm(''); setSelectedGenre(null); }}>
           <div className={styles.navbarLogo}>
-            {/* Aquí reemplazamos el texto con el logo */}
             <Image 
-              src="/images/logo.png" // Ruta del logo
+              src="/images/logo.png" 
               alt="SOLOLIBRO Logo" 
-              width={100} // Ajusta el tamaño según tu necesidad
+              width={100} 
               height={50} 
             />
           </div>
         </Link>
-        <SideBarMenu />
       </div>
+      
       <input
         type="text"
         placeholder="Título o Autor"

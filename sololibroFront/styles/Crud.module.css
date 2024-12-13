@@ -1,6 +1,6 @@
 /* Estilo contenedor de la tabla */
 .table-container {
-    margin-top: 20px;
+    margin-top: 24px;
     padding: 20px;
     border-radius: 10px;
     background-color: #f0f0f0;
@@ -16,7 +16,7 @@
   
   .crud-table th,
   .crud-table td {
-    border: 1px solid #ddd;
+    border: 3px solid #ddd;
     padding: 12px 20px;
     text-align: left;
   }

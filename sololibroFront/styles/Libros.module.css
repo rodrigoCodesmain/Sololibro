@@ -1,9 +1,9 @@
 .bookContainer {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  grid-gap: 20px;
-  width: 100%;
-  max-width: 1200px;
+  grid-gap: 10px;
+  width: 80%;
+  max-width: 1100px;
   margin: 0 auto;
 }
 
@@ -21,7 +21,7 @@
 }
 
 .bookImage {
-  flex: 0 0 200px;
+  flex: 0 0 160px;
   overflow: hidden;
   border-right: 1px solid #ddd;
 }
@@ -75,4 +75,44 @@
 
 .bookInfo button:hover {
   background-color: #0056b3;
+}
+
+/* Barra de paginación */
+.pagination {
+  display: flex;  /* Para alinear los botones en una fila */
+  justify-content: center;  /* Centra los botones */
+  margin-top: 20px;  /* Añade espacio arriba de la barra de paginación */
+  padding: 10px 0;  /* Añade espacio alrededor de la barra */
+}
+
+/* Estilo general de los botones de página */
+.pagination button {
+  margin: 0 5px;  /* Espacio entre los botones */
+  padding: 10px 15px;  /* Tamaño y espacio interno de los botones */
+  background-color: #f0f0f0;  /* Color de fondo por defecto */
+  border: 1px solid #ccc;  /* Borde gris */
+  border-radius: 5px;  /* Bordes redondeados */
+  cursor: pointer;  /* Cambia el cursor a mano cuando pasas por encima */
+  font-size: 16px;  /* Tamaño de la fuente */
+}
+
+/* Estilo cuando se pasa el ratón por encima de un botón */
+.pagination button:hover {
+  background-color: #ddd;  /* Cambia el fondo cuando el ratón pasa sobre el botón */
+  border-color: #bbb;  /* Cambia el color del borde */
+}
+
+/* Estilo del botón activo (página actual) */
+.pagination button.active {
+  background-color: #007bff;  /* Fondo azul para la página activa */
+  color: white;  /* Color blanco para el texto */
+  border-color: #007bff;  /* Color del borde igual que el fondo */
+  font-weight: bold;  /* Hace el texto en negrita */
+}
+
+/* Estilo para el botón deshabilitado (si es necesario) */
+.pagination button:disabled {
+  background-color: #f9f9f9;  /* Fondo más claro para botones deshabilitados */
+  cursor: not-allowed;  /* Cambia el cursor para indicar que no se puede hacer clic */
+  opacity: 0.6;  /* Opacidad reducida */
 }

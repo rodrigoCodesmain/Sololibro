@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import Link from 'next/link'; // Usamos Link de Next.js
 import styles from '../styles/SideBarGenrer.module.css';
 
 const genres = [
@@ -13,10 +12,12 @@ const genres = [
   'Historia',
   'Biografía',
   'Ciencia',
+  'accion',
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ onGenreSelect }) {
   const [isGenresMenuOpen, setIsGenresMenuOpen] = useState(false);
+
 
   return (
     <div className={styles.sidebar}>
@@ -25,10 +26,10 @@ export default function Sidebar() {
       </button>
       {isGenresMenuOpen && (
         <ul className={styles.genreList}>
+          <li onClick={() => onGenreSelect(null)}>Todos</li> {/* Mostrar todos los libros */}
           {genres.map((genre, index) => (
-            <li key={index}>
-              {/* Redirige a la ruta estática correspondiente */}
-              <Link href={`/genero/${genre.toLowerCase().replace(/ /g, '-')}`}>{genre}</Link>
+            <li key={index} onClick={() => onGenreSelect(genre)}>
+              {genre}
             </li>
           ))}
         </ul>
