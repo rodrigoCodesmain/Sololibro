@@ -1,0 +1,49 @@
+/* Estilo contenedor de la tabla */
+.table-container {
+    margin-top: 24px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #f0f0f0;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Estilo de la tabla */
+  .crud-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #f8c5e2; /* Color rosado para la tabla */
+  }
+  
+  .crud-table th,
+  .crud-table td {
+    border: 3px solid #ddd;
+    padding: 12px 20px;
+    text-align: left;
+  }
+  
+  /* Estilo para los títulos */
+  .crud-table th {
+    background-color: #f787bc;
+    color: white;
+    font-weight: bold;
+  }
+  
+  /* Fila al pasar el mouse */
+  .crud-table tr:hover {
+    background-color: #f1e4e8;
+  }
+  
+  /* Estilo para los botones */
+  .crud-button {
+    padding: 8px 16px;
+    background-color: #bd0505;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .crud-button:hover {
+    background-color: #f787bc;
+  }
+  

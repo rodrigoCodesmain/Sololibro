@@ -1,0 +1,70 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px; /* Añade más espacio a los lados */
+  background-color: #fdaeae;
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Aumenta el espacio entre el logo y cualquier otro elemento */
+}
+
+.navbarLogo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px; /* Aumenta el espacio dentro del logo si tiene texto */
+  font-weight: bold; 
+} 
+
+.navbarLogo img {
+  width: 100px; /* Mantén el tamaño del logo */
+  height: auto; /* Proporciones conservadas */
+}
+
+.navbarSearch {
+  flex: 1;
+  font-size: 17px;
+  padding: 11px;
+  border: 1px solid #af0909;
+  border-radius: 10px;
+  margin-right: 50px; /* Aumenta espacio entre la barra de búsqueda y los íconos */
+  margin-left: 50px;  /* Aumenta espacio entre la barra de búsqueda y el logo */
+}
+
+.navbar-icons {
+  display: flex;
+  gap: 50px; /* Aumenta el espacio entre los íconos de la campana y el perfil */
+}
+
+.profileIconContainer {
+  position: relative;
+  font-size: 20px;
+  line-height: 1;
+  gap: 10px; /* Añade espacio entre los íconos de perfil */
+}
+
+.profileMenu {
+  position: absolute;
+  top: 200%;
+  right: 0;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+}
+
+.profileMenu a {
+  display: block;
+  margin-bottom: 5px;
+  text-decoration: none;
+  color: #333;
+}
+
+.profileMenu a:hover {
+  color: #af0909;
+}
